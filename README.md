@@ -7,9 +7,9 @@ We even created two separate Github repos at one point and somehow just had to c
 
 It worked 🤷🏾‍♂️ BUT in retrospect, we could have improved the developer experience by taking advantage of some good JS frameworks and/or libraries. 
 
-I want to try rewrite that thing using React and TypeScript this time!...
+I want to try rewrite that thing using React and TypeScript this time!
 
-Problem...I don't really know react that well.
+Problem...I don't really know React that well.
 
 Solution..."The Road to React".
 
