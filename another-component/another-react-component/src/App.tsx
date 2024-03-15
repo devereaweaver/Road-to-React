@@ -26,7 +26,7 @@ const list = [
   },
 ];
 
-function List() {
+const List = () => {
   /* Responsible for rending list components. */
   return (
     <ul>
@@ -46,7 +46,7 @@ function List() {
   );
 }
 
-function Search() {
+const Search = () => {
   /* Responsible for rending the search component */
   return (
     <div>
@@ -56,7 +56,7 @@ function Search() {
   );
 }
 
-export default function App() {
+const App = () => {
   return (
     <div>
       <h1>Lists in React!</h1>
@@ -67,3 +67,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
