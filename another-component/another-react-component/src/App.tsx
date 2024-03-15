@@ -26,9 +26,8 @@ const list = [
   },
 ];
 
-const List = () => {
+const List = () => (
   /* Responsible for rending list components. */
-  return (
     <ul>
       {list.map((item) => {
         return (
@@ -43,29 +42,24 @@ const List = () => {
         );
       })}
     </ul>
-  );
-}
+);
 
-const Search = () => {
+const Search = () => (
   /* Responsible for rending the search component */
-  return (
-    <div>
-      <label htmlFor="search">search:  </label>
-      <input id="search" type="text"></input>
-    </div>
-  );
-}
+  <div>
+    <label htmlFor="search">search:  </label>
+    <input id="search" type="text"></input>
+  </div>
+);
 
-const App = () => {
-  return (
-    <div>
-      <h1>Lists in React!</h1>
-      <Search />
-      <hr />
-      <List />
+const App = () => (
+  <div>
+    <h1>Lists in React!</h1>
+    <Search />
+    <hr />
+    <List />
 
-    </div>
-  );
-}
+  </div>
+)
 
 export default App;
