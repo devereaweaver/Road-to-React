@@ -2,6 +2,8 @@
  * of items into JSX by returning JSX for each item. Let's figure out 
  * how to do this in React. */
 
+import { isElement } from "react-dom/test-utils";
+
 const list = [
   {
     title: 'React',
@@ -33,22 +35,34 @@ export default function App() {
 
       <hr />
 
-      {/* Here's were we get jiggy, for each item in the list
-        * we turn it into an li element and then go back into 
-        * the JS/TS to get access the title attribute. */}
-
-      <ul>
+      {/* <ul>
         {list.map((item) => {
           return (
             <div>
               <p key={item.objectID}>{item.title}</p>
-              <li key={item.objectID}><a href={item.url}>URL: {item.url}</a></li>
-              <li key={item.objectID}>Author: {item.author}</li>
-              <li key={item.objectID}>Number of comments: {item.num_comments}</li>
-              <li key={item.objectID}>Points: {item.points}</li>
+              <li key={item.url}><a href={item.url}>URL: {item.url}</a></li>
+              <li key={item.author}>Author: {item.author}</li>
+              <li key={item.num_comments}>Number of comments: {item.num_comments}</li>
+              <li key={item.points}>Points: {item.points}</li>
               <br/>
             </div>
           ); 
+        })}
+      </ul> */}
+
+      <ul>
+        {list.map(function (item) {
+          return (
+            <li key={item.objectID}>
+              <a href={item.url}>{item.title}:</a>
+              <ul>
+                <li key={item.author}>Author: {item.author}</li>
+                <li key={item.num_comments}>Number of Comments:{item.num_comments}</li>
+                <li key={item.points}>Points: {item.points}</li>
+              </ul>
+              <br/>
+            </li>
+          );
         })}
       </ul>
 
