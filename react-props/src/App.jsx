@@ -21,9 +21,12 @@ const App = () => {
     },
   ];
 
+  // Check rendering 
+  console.log("App rendered.");
+
   return (
     <div>
-      <h1>Handler Function in JSX</h1>
+      <h1>React Playground!</h1>
       <Search />
       <hr />
       <List list={stories} />
@@ -45,32 +48,47 @@ const Item = (props) => (
   </li>
 );
 
-const List = (props) => (
+const List = (props) => {
   /* An unordered List component that iterates over an array
    * to create a list element from each item stored in it */
-  <ul>
-    {props.list.map((item) => (
-      <Item key={item.objectID} item={item} />
-    ))}
-  </ul>
-);
+
+  console.log("List rendered.");
+
+  return (
+    <ul>
+      {props.list.map((item) => (
+        <Item key={item.objectID} item={item} />
+      ))}
+    </ul>
+  );
+}
 
 const Search = () => {
   /* A search box component */
 
   // Initialize some state within this component
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [count, setCount] = React.useState(1);
 
   const handleChange = (event) => {   // synthetic event
-    // Update the components state
+    // Update the components state using the state updater function 
+    // returned from the useState method 
+    setCount(count + 1);
     setSearchTerm(event.target.value);
+  }
+
+  // See how many times this component rerenders after mutating state
+  if (count == 1) {
+  console.log("Search rendered.");
+  } else {
+    console.log("Search re-rendered " + count + " times.");
   }
 
   return (
     <div>
       <label htmlFor="search">Search:  </label>
-      <input id="search" type="text" onChange={handleChange} onBlur={handleChange}></input> 
-      <br/>
+      <input id="search" type="text" onChange={handleChange} onBlur={handleChange}></input>
+      <br />
       <p>
         Searching for <strong>{searchTerm}</strong>
       </p>
