@@ -34,7 +34,7 @@ const App = () => {
   // Filter stories list based on library title or author(s) name(s)
   const filteredStories = stories.filter((story) => {
     return (
-      story.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      story.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       story.author.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
@@ -42,6 +42,8 @@ const App = () => {
   return (
     <div>
       <h1>React Playground!</h1>
+      {/* Let the HTML know about the React state by
+      passing the searchTerm state to it and not just a handler */}
       <Search onSearch={handleSearch} />
       <hr />
       <List list={filteredStories} />
@@ -60,7 +62,7 @@ const List = (props) => {
         <Item key={item.objectID} item={item} />
       ))}
     </ul>
-   );
+  );
 }
 
 const Search = (props) => {
@@ -68,7 +70,11 @@ const Search = (props) => {
   return (
     <div>
       <label htmlFor="search">Search:  </label>
-      <input id="search" type="text" onChange={props.onSearch}></input>
+      <input
+        id="search"
+        type="text"
+        onChange={props.onSearch}
+      />
     </div>
   )
 };
