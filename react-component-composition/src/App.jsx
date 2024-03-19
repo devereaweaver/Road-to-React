@@ -61,26 +61,12 @@ const App = () => {
     <div>
       <h1>React Playground!</h1>
 
-      <InputWithLabel
-        id="search"
-        label="Search"
-        value={searchTerm}
-        onInputChange={handleSearch}
-      />
+      {/* We're using actual text in the tag, we have to render it now in the component */}
+      <InputWithLabel id="search" value={searchTerm} onInputChange={handleSearch}>
+        <strong>Search: </strong>
+      </InputWithLabel>
 
       <br/>
-
-      {/* For demonstration purposes I made another instance of the InputWithLabel
-      but instead made it a button by passing different props to it. This demonstrates
-      how a React component can be built for reusability in different cases. */}
-      <InputWithLabel
-        id="button"
-        label="Button"
-        value="Click me!"
-        type='button'
-        onInputChange={handleSearch}
-      />
-
       <hr />
 
       <List list={filteredStories} />
@@ -100,27 +86,12 @@ const List = ({ list }) => {
   );
 }
 
-// const Search = ({ search, onSearch }) => {
-//   /* A search box component */
-//   return (
-//     <>
-//       <label htmlFor="search">Search:  </label>
-//       <input
-//         id="search"
-//         type="text"
-//         onChange={onSearch}
-//         value={search}
-//       />
-//     </>
-//   );
-// };
-
-
-/* Refactor the above Search component into a more general component */
-const InputWithLabel = ({ id, label, value, type = 'text', onInputChange }) => {
+// Use the children prop to render everything that has been rendered between the 
+// opening and closing tag syntax of these elements
+const InputWithLabel = ({ id, value, type = 'text', onInputChange, children }) => {
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}>{children}</label>
       &nbsp;
       <input
         id={id}
