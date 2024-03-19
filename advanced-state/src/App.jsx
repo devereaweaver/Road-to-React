@@ -15,6 +15,9 @@
 
 import * as React from 'react';
 
+//==============================================================================
+// MODULE VARIABLES 
+//==============================================================================
 const title = "React Advanced State";
 
 const initialStories = [
@@ -37,12 +40,24 @@ const initialStories = [
   },
 ];
 
-// Introduce the reducer function 
+const actionTypes = {
+  /* An object containing all the action types for our React reducer */
+  setStories: 'SET_STORIES',
+  removeStory: 'REMOVE_STORY',
+}
+
+//==============================================================================
+// MODULE FUNCTIONS 
+//==============================================================================
 const storiesReducer = (state, action) => {
+  /* React reducer that manages two state transitions. 
+   *  1. State transition for the initializing the stories array 
+   *  2. State transition for removing an element from the stories array
+   */  
   switch (action.type) {
     case 'SET_STORIES':   // set initial data
       return action.payload;
-    case 'REMOVE_STORY':    // remove a story from current state
+    case 'REMOVE_STORY':   
       return state.filter(
         // filter out the story we want to remove and return 
         // the updated state
@@ -62,14 +77,12 @@ const getAsyncStories = () =>
 const useStorageState = (key, initialState) => {
   /* A customized React hook that will be used to synchronize both the React state
    * and the browser's local storage. */
-
-  // Initialize state
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
 
-  // Update local storage
   React.useEffect(() => {
+    /* Update browser local storage to contain user's search term */
     localStorage.setItem(key, value);
   }, [value, key]);
 
@@ -77,6 +90,9 @@ const useStorageState = (key, initialState) => {
   return [value, setValue];
 };
 
+//==============================================================================
+// REACT COMPONENTS
+//==============================================================================
 const App = () => {
   console.clear()
 
@@ -107,7 +123,7 @@ const App = () => {
         // Notice that we're not explicitly defining an action and then passing it, 
         // we're just defining an object in the parameter that will be the action.
         dispatchStories({
-          type: 'SET_STORIES',
+          type: actionTypes.setStories,
           payload: result.data.stories,
         });
 
@@ -126,7 +142,7 @@ const App = () => {
     /* Remove an element from the stories list by using the dispatch
      * function and running the logic that matches the given action type */
     dispatchStories({
-      type: 'REMOVE_STORY',
+      type: actionTypes.removeStory,
       payload: item,
     });
   };
