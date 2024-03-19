@@ -3,9 +3,19 @@
  * Task: We're going to use React Reducers to bundle React state that is related. 
  * It can be a good idea to use a Reducer when you have multiple state values that 
  * are related or dependent on each other or the same external event. 
- */ 
+ * 
+ * Our data, loading, and error handling are all related to data fetching, a common
+ * domain. Thus, we'll refactor our code to use a reducer to manage these state 
+ * transitions instead of using react state to manage them.
+ * 
+ * The first thing we'll want to do is introduce a reducer function outside of our 
+ * components. 
+ * 
+ */
 
 import * as React from 'react';
+
+const title = "React Advanced State";
 
 const initialStories = [
   {
@@ -26,6 +36,22 @@ const initialStories = [
     objectID: 1,
   },
 ];
+
+// Introduce the reducer function 
+const storiesReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_STORIES':   // set initial data
+      return action.payload;
+    case 'REMOVE_STORY':    // remove a story from current state
+      return state.filter(
+        // filter out the story we want to remove and return 
+        // the updated state
+        (story) => action.payload.objectID !== story.objectID
+      );
+    default:
+      throw new Error();
+  }
+};
 
 const getAsyncStories = () =>
   /* Return a promise that resolves to an object containing data */
@@ -51,31 +77,44 @@ const useStorageState = (key, initialState) => {
   return [value, setValue];
 };
 
-
 const App = () => {
   console.clear()
 
   const [searchTerm, setSearchTerm] = useStorageState('search', '');
-  const [stories, setStories] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
+  // Use a React reducer instead of useState to manage the stories list. 
+  // This hook receives a reducer and an initial state as arguments. Here the 
+  // first arg is the reducer function we defined above and the second is an empty
+  // array, meaning the initial state will be empty.
+  const [stories, dispatchStories] = React.useReducer(storiesReducer, []);
+
+  // Now that we've created a reducer and we have a dispatch function to update
+  // state using the reducer, we'll now use this dispatch function in the useEffect
+  // hook so that upon initial rendering, it'll load our initial stories data
   React.useEffect(() => {
     /* Fetch the async data (only runs one time upon
      * initial rendering). */
 
     // Set the loading state to true when fetching the data
     setIsLoading(true);
-    console.log(setIsLoading);
 
     // Resolve the promise after successful load
     getAsyncStories()
-      .then(result => {
-        setStories(result.data.stories);
-        setIsLoading(false);    // data successfully loaded
+      .then((result) => {
+        // Set the stories state to be the initial stories after successfully fetched.
+        // Notice that we're not explicitly defining an action and then passing it, 
+        // we're just defining an object in the parameter that will be the action.
+        dispatchStories({
+          type: 'SET_STORIES',
+          payload: result.data.stories,
+        });
+
+        // Reset isLoading state after successful load
+        setIsLoading(false);
       }).catch(() => setIsError(true));
-  },
-    []);
+  }, []);
 
 
   const handleSearch = (event) => {
@@ -83,16 +122,13 @@ const App = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleRemoveStory = (toDelete) => {
-    /* Remove an element from the stories list */
-
-    // Filter out the desired item 
-    const updateStories = stories.filter((story) => {
-      toDelete.objectID !== story.objectID
+  const handleRemoveStory = (item) => {
+    /* Remove an element from the stories list by using the dispatch
+     * function and running the logic that matches the given action type */
+    dispatchStories({
+      type: 'REMOVE_STORY',
+      payload: item,
     });
-
-    // Update the React state
-    setStories(updateStories);
   };
 
   // Filter stories list based on searchTerm
@@ -105,7 +141,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>React Playground!</h1>
+      <h1>{title}</h1>
 
       <InputWithLabel id="search" value={searchTerm} onInputChange={handleSearch}>
         <strong>Search: </strong>
