@@ -1,16 +1,13 @@
-/* Async/Await
- * 
- * Task: Refactor the code to use async/await syntax since this is the more
- * modern/popular way to work with async functions
- */
+/* CSS In React */
 
 import * as React from 'react';
 import axios from 'axios';
+import './App.css'
 
 //==============================================================================
 // MODULE VARIABLES 
 //==============================================================================
-const title = "Async/Await";
+const title = "CSS In React";
 
 const API_ENDPOINT = 'http://hn.algolia.com/api/v1/search?query=';
 
@@ -145,15 +142,14 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>{title}</h1>
+    <div className="container">
+      <h1 className='headline-primary'>{title}</h1>
       <SearchForm
         searchTerm={searchTerm}
         onSearchInput={handleSearchInput}
         onSearchSubmit={handleSearchSubmit}
       />
       <br />
-      <hr />
 
       {stories.isError && <p>Something went wrong fetching data!...</p>}
 
@@ -188,17 +184,22 @@ const Item = ({ item, onRemoveItem }) => {
 
   return (
     <>
-      <li key={item.objectID}>
-        <a href={item.url}>{item.title}:</a>
-        <ul>
-          <li key={item.author}>Author: {item.author}</li>
-          <li key={item.num_comments}>Number of Comments: {item.num_comments}</li>
-          <li key={item.points}>Points: {item.points}</li>
-        </ul>
-        <br />
+      <li className="item">
+        <span style={{ width: '40%' }}>
+          <a href={item.url}>{item.title}</a>
+        </span>
+        <span style={{ width: '30%' }}>Author: {item.author}</span>
+        <span style={{ width: '10%' }}>Number of Comments: {item.num_comments}</span>
+        <span style={{ width: '10%' }}>Points: {item.points}</span>
+        <span style={{ width: '10%' }}>
+          <button
+            type="button"
+            onClick={() => onRemoveItem(item)} className="button button_small"
+          >
+            Dismiss
+          </button>
+        </span>
       </li>
-      <button type="button" onClick={() => onRemoveItem(item)}>Dismiss</button>
-      <br />
     </>
   );
 };

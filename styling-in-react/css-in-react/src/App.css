@@ -1,42 +1,50 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/*******************************************************************************
+* Container styles 
+*******************************************************************************/
+.container {
+  height: 100vw;
+  padding: 20px;
+
+  background: #83a4d4;    /* fallback for old browsers */
+  background: linear-gradient(to left, #b6fbff,  #83a4d4);
+
+  color: #171212;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.headline-primary {
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: 2px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*******************************************************************************
+* Item component styles 
+*******************************************************************************/
+.item {
+  display: flex;
+  align-items: center;
+  padding-bottom: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.item > span {
+  padding: 0 5px;
+  white-space: nowrap;    /* keep content on single line */
+  overflow: hidden;    /* hide any overflowing content */
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.card {
-  padding: 2em;
+.item > span > a {
+  color: inherit;
 }
 
-.read-the-docs {
-  color: #888;
+/*******************************************************************************
+* Base Button Element Styles 
+*******************************************************************************/
+.button {
+  background: transparent;
+  border: 1px solid #171212;
+  padding: 5px;
+  cursor: pointer;
 }
+
